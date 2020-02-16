@@ -3,23 +3,21 @@ package com.itim.foodcharity.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.annotation.Generated;
-
 @Document(collection = "Charity")
 public class Charity {
     @Id
-    private String CharityId;
+    private String charityId;
     private String Address;
     private String PhoneNo;
     private int rating;
 
 
     public String getCharityId() {
-        return CharityId;
+        return charityId;
     }
 
     public void setCharityId(String charityId) {
-        CharityId = charityId;
+        this.charityId = charityId;
     }
 
     public String getAddress() {

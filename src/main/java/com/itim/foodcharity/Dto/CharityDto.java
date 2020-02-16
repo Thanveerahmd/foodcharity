@@ -1,16 +1,18 @@
 package com.itim.foodcharity.Dto;
 
-public class CharityDto {
+import org.springframework.data.annotation.Id;
 
-//    private String CharityId;
+public class CharityDto {
+    @Id
+    private String CharityId;
     private String Address;
     private String PhoneNo;
     private int rating;
     private String Name;
 
-//    public String getCharityId() {
-//        return CharityId;
-//    }
+    public String getCharityId() {
+        return CharityId;
+    }
 
     public String getAddress() {
         return Address;
@@ -28,9 +30,9 @@ public class CharityDto {
         return Name;
     }
 
-//    public void setCharityId(String charityId) {
-//        CharityId = charityId;
-//    }
+    public void setCharityId(String charityId) {
+        CharityId = charityId;
+    }
 
     public void setAddress(String address) {
         Address = address;

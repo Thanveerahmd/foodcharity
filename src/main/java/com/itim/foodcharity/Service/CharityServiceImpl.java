@@ -4,12 +4,13 @@ import com.itim.foodcharity.Dto.CharityDto;
 import com.itim.foodcharity.Model.Charity;
 import com.itim.foodcharity.Repository.CharityRepository;
 import com.itim.foodcharity.iService.CharityService;
+import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -27,21 +28,35 @@ public class CharityServiceImpl implements CharityService {
     }
 
     @Override
-    public void Delete(String charityId) {
-        Charity charity = charityRepository.findById(charityId).
+    public boolean Delete(String charityId) {
+                ObjectId ob = new ObjectId(charityId);
+            Charity charity = charityRepository.findByCharityId(ob).
                 orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + charityId));
         charityRepository.delete(charity);
+        return true;
     }
 
     @Override
     public void Update(CharityDto data) {
         Charity charity = modelMapper.map(data,Charity.class);
-        Charity Oldcharity = charityRepository.findById(charity.getCharityId()).
-                orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + charity.getCharityId()));
-       Oldcharity.setAddress(charity.getAddress());
-       Oldcharity.setName(charity.getName());
-       Oldcharity.setPhoneNo(charity.getPhoneNo());
-       charityRepository.save(Oldcharity);
+        System.out.println(charity.getName()+" awa");
+        ObjectId ob =  new ObjectId(charity.getCharityId());
+        System.out.println(ob.toString());
+        Optional<Charity> Oldcharity = charityRepository.findByCharityId(ob);
+        if(Oldcharity.isPresent()){
+            System.out.println("Came in");
+            Charity charity1 = Oldcharity.get();
+            charity1.setAddress(charity.getAddress());
+            charity1.setName(charity.getName());
+            charity1.setPhoneNo(charity.getPhoneNo());
+            charityRepository.save(charity1);
+        }else{
+            System.out.println("Not Present");
+        }
+//                orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + charity.getCharityId()));
+
+
+
     }
 
     @Override

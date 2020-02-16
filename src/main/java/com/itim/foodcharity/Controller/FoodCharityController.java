@@ -6,6 +6,8 @@ import com.itim.foodcharity.iService.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("app")
@@ -22,7 +24,8 @@ public class FoodCharityController {
     @PostMapping("/updateCharity")
     public String UpdateCharity(@RequestBody CharityDto dto) {
         try {
-            System.out.println(dto.getAddress());
+
+           // System.out.println(dto.);
             charityService.Update(dto);
             return "Ok";
         }catch (Exception e){
@@ -30,5 +33,17 @@ public class FoodCharityController {
         }
 
     }
+
+    @PostMapping("/delete/{id}")
+    public boolean DeleteCharity(@PathVariable String id) {
+        System.out.println(id);
+       return charityService.Delete(id);
+    }
+
+    @PostMapping("/all")
+    public List<Charity> AllCharity() {
+        return charityService.getAll();
+    }
+
 
 }
